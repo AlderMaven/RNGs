@@ -2,8 +2,10 @@
 //Simple class to contain RNG functions
 #include<ctime>
 #include<stdlib.h>
+#include <chrono>
 
 class RNG{
+	public:
     int srandNum(int min, int max){
         if(min < 0|| max<0 || min>max){ //Error cases
             return -1;
@@ -35,5 +37,24 @@ class RNG{
 	    //Since that difference is > 0, this gives a range that can be returned reliably in consistant time
 	
 	    return result;
-    }	
+    }
+	int fastRandNum(int min, int max){
+		using namespace std::chrono;
+
+		if(min < 0|| max<0 || min>max){ //Error cases
+		    return -1;
+	    }
+	    if(min == max){ //Quick return
+		    return min;
+	    }
+		high_resolution_clock::time_point t1 = high_resolution_clock::now();
+		int result;
+		int temp = max+1-min;
+		int tempTwo = high_resolution_clock::now().time_since_epoch().count();
+		srand(tempTwo);
+		
+		
+	    result = (rand()%(temp))+min;
+		return result;
+	}
 };
