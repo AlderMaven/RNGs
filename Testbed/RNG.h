@@ -49,14 +49,20 @@ class RNG{
 	    if(min == max){ //Quick return
 		    return min;
 	    }
+		//Create clock and set timepoint to nanoseconds
 		auto t1 = high_resolution_clock::now();
 		auto t1_ns = time_point_cast<nanoseconds>(t1);
+		
+		//Vars for use in return
 		int result;
-		int temp = max+1-min;
+		int temp = max+1-min; //=to difference between max and min+1
+		
+		//Seeds srand with time since epoch in nanoseconds
 		long long tempTwo = t1_ns.time_since_epoch().count();
 		srand(tempTwo);
 		
-		
+		//takes rand and by taking modulo of difference+1 then adding min 
+		//will return an int in range [min, max]
 	    result = (rand()%(temp))+min;
 		return result;
 	}

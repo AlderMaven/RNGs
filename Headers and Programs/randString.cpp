@@ -11,6 +11,7 @@
 using namespace std;
 
 class randStringGen{
+	//generates a string of distinct length with only lowercase letters randomly chosen
 	string generateLowerCase(int length){
 	
 		string returnString;
@@ -21,15 +22,16 @@ class randStringGen{
 		
 		
 		for(int i = 0; i<length+1; i++){
-			usleep(rando.fastRandNum(1000, 1001));
-			temp = (char) rando.fastRandNum(97,122);
+			usleep(rando.fastRandNum(1000, 1001)); //Must be at or above 1000 to operate correctly in this implementation
+			temp = (char) rando.fastRandNum(97,122); //Using ASCII characters to generate
 			oss << temp;
 			
 		}
 		returnString = oss.str();
 		return returnString;
 	}
-
+	
+	//generates a string of distinct length with only uppercase letters randomly chosen
 	string generateUpperCase(int length){
 		
 		string returnString;
@@ -39,8 +41,8 @@ class randStringGen{
 		std::ostringstream oss;
 		
 		for(int i = 0; i<length+1; i++){
-			usleep(rando.fastRandNum(1000, 1500));
-			temp = (char) rando.fastRandNum(65,90);
+			usleep(rando.fastRandNum(1000, 1001)); //Must be at or above 1000 to operate correctly in this implementation
+			temp = (char) rando.fastRandNum(65,90); //Using ASCII characters to generate
 			oss << temp;
 		}
 		returnString = oss.str();
@@ -48,6 +50,7 @@ class randStringGen{
 	}
 	
 	public:
+	//Fixed length with mix of upper and lower case characters
 	string randString(int length){
 		
 		if(length<1){
@@ -68,11 +71,13 @@ class randStringGen{
 		return returnString;
 	}
 	
-	
+	//For certain length but randomized characters
 	string randString(int length, int caseFlag){
 		if(length<1){
 			return NULL;
 		}
+		
+		
 		switch(caseFlag){
 			case 1: return randString(length);
 			case 2: return generateLowerCase(length);
@@ -80,8 +85,11 @@ class randStringGen{
 			default: return NULL;
 		}
 	}
+	
+	//For string of length within range, composed of randomized characters
 	string randString(int minLength, int maxLength, int caseFlag){
 		
+		//Handling of base cases
 		if(minLength == maxLength){
 			return randString(minLength, caseFlag);
 		}
@@ -89,14 +97,15 @@ class randStringGen{
 			return NULL;
 		}
 		
+		//Randomize length based on min and max
 		RNG rando;
 		int length = rando.fastRandNum(minLength, maxLength);
 		
 		switch(caseFlag){
-			case 1: return randString(length); break;
+			case 1: return randString(length); break; //Gives mix of upper and lower case
 			case 2: return generateLowerCase(length); break;
 			case 3: return generateUpperCase(length); break;
-			default: return NULL; break;
+			default: return NULL; break; //error handling for invalid caseFlags
 		}
 		
 	}
@@ -104,11 +113,11 @@ class randStringGen{
 
 
 
-int main(){
+int main(){ //Used for simple test cases
 	
 	randStringGen rando;
 	
-	string printingString = (rando.randString(10,100,2));
+	string printingString = (rando.randString(10,100,3));
 	cout << printingString << endl;
 	return 0;
 }
