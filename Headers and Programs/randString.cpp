@@ -2,7 +2,7 @@
 //Randomized string generators
 
 #include <iostream>
-#include <RNG.h> //Must include RNG.h from repository
+#include <C:\Users\AlderMavin\Documents\GitHub\RNGs\Testbed\RNG.h> //Must include RNG.h from repository
 #include <stdlib.h>
 #include <string.h>
 #include <sstream>
@@ -21,10 +21,10 @@ class randStringGen{
 		
 		
 		for(int i = 0; i<length+1; i++){
-		
+			usleep(rando.fastRandNum(1000, 1001));
 			temp = (char) rando.fastRandNum(97,122);
 			oss << temp;
-			usleep(rando.fastRandNum(650, 900));
+			
 		}
 		returnString = oss.str();
 		return returnString;
@@ -39,9 +39,9 @@ class randStringGen{
 		std::ostringstream oss;
 		
 		for(int i = 0; i<length+1; i++){
+			usleep(rando.fastRandNum(1000, 1500));
 			temp = (char) rando.fastRandNum(65,90);
 			oss << temp;
-			usleep(rando.fastRandNum(65, 90));
 		}
 		returnString = oss.str();
 		return returnString;
@@ -108,7 +108,7 @@ int main(){
 	
 	randStringGen rando;
 	
-	string printingString = (rando.randString(2,4,2));
+	string printingString = (rando.randString(10,100,2));
 	cout << printingString << endl;
 	return 0;
 }

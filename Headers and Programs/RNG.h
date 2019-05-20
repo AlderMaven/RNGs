@@ -4,6 +4,8 @@
 #include<stdlib.h>
 #include <chrono>
 
+using namespace std;
+
 class RNG{
 	public:
     int srandNum(int min, int max){
@@ -47,10 +49,11 @@ class RNG{
 	    if(min == max){ //Quick return
 		    return min;
 	    }
-		high_resolution_clock::time_point t1 = high_resolution_clock::now();
+		auto t1 = high_resolution_clock::now();
+		auto t1_ns = time_point_cast<nanoseconds>(t1);
 		int result;
 		int temp = max+1-min;
-		int tempTwo = high_resolution_clock::now().time_since_epoch().count();
+		long long tempTwo = t1_ns.time_since_epoch().count();
 		srand(tempTwo);
 		
 		
