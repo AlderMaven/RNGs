@@ -2,7 +2,7 @@
 //Randomized string generators
 
 #include <iostream>
-#include <C:\Users\AlderMavin\Documents\GitHub\RNGs\Testbed\RNG.h> //Must include RNG.h from repository
+#include <RNG.h> //Must include RNG.h from repository
 #include <stdlib.h>
 #include <string.h>
 #include <sstream>
@@ -21,7 +21,7 @@ class randStringGen{
 		std::ostringstream oss;
 		
 		
-		for(int i = 0; i<length+1; i++){
+		for(int i = 0; i<length; i++){
 			usleep(rando.fastRandNum(1000, 1001)); //Must be at or above 1000 to operate correctly in this implementation
 			temp = (char) rando.fastRandNum(97,122); //Using ASCII characters to generate
 			oss << temp;
@@ -40,13 +40,23 @@ class randStringGen{
 		
 		std::ostringstream oss;
 		
-		for(int i = 0; i<length+1; i++){
+		for(int i = 0; i<length; i++){
 			usleep(rando.fastRandNum(1000, 1001)); //Must be at or above 1000 to operate correctly in this implementation
 			temp = (char) rando.fastRandNum(65,90); //Using ASCII characters to generate
-			oss << temp;
+			oss << temp; //using ostringstream to build string
 		}
-		returnString = oss.str();
+		returnString = oss.str(); //return using oss to produce string
 		return returnString;
+	}
+	
+	string simpleSpace(){
+		RNG rando;
+		int temp;
+		std::ostringstream oss;
+		temp = 32;
+		
+		oss << (char) temp;
+		return oss.str();
 	}
 	
 	public:
@@ -58,16 +68,18 @@ class randStringGen{
 		}
 		RNG rando;
 		string returnString;
+		std::ostringstream oss;
 		
-		for(int i = 0; i<length+1; i++){
+		for(int i = 0; i<length; i++){
 			
-			if(rando.fastRandNum(0,1)){
-				returnString = returnString + generateLowerCase(1);
+			if(rando.fastRandNum(0,1)){ //select between genUpper and genLower to produce 1 character
+				oss << generateLowerCase(1);
 			}
 			else{
-				returnString = returnString + generateUpperCase(1);
+				oss << generateUpperCase(1);
 			}
 		}
+		returnString = oss.str();
 		return returnString;
 	}
 	
@@ -109,6 +121,33 @@ class randStringGen{
 		}
 		
 	}
+	
+	//Generates a randomized string which may be seperated by single spaces
+	string randSpacedString(int length){
+		if(length<1){
+			return NULL;
+		}
+		RNG rando;
+		string returnString;
+		int temp;
+		bool spaceFlag = false; //Used to create monospacing
+		std::ostringstream oss;
+		
+		
+		for(int i = 0; i<length;i++){
+			temp = rando.fastRandNum(0, 4); //For occuence rate of spaces, increase space rate by decreasing second number
+			if(temp == 0 && spaceFlag){
+				oss << simpleSpace();
+				spaceFlag = false;
+			}
+			else{
+				oss << randString(1);
+				spaceFlag = true; //Set flag to enable spaces 
+			}
+		}
+		returnString = oss.str(); //Create string from stream
+		return returnString;
+	}
 };
 
 
@@ -117,7 +156,7 @@ int main(){ //Used for simple test cases
 	
 	randStringGen rando;
 	
-	string printingString = (rando.randString(10,100,3));
+	string printingString = (rando.randSpacedString(50));
 	cout << printingString << endl;
 	return 0;
 }
