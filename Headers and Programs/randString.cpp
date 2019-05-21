@@ -149,9 +149,9 @@ class randStringGen{
 		return returnString;
 	}
 	
-	/*string randSentence(int minLength, int maxLength){
-		
-	8/}
+	string randSentence(int minLength, int maxLength){
+		return NULL;
+	}
 };
 
 
