@@ -102,11 +102,11 @@ class randStringGen{
 	string randString(int minLength, int maxLength, int caseFlag){
 		
 		//Handling of base cases
-		if(minLength == maxLength){
-			return randString(minLength, caseFlag);
-		}
-		else if(minLength > maxLength){
+		if(minLength > maxLength || minLength < 1){
 			return NULL;
+		}
+		else if(minLength == maxLength){
+			return randString(minLength, caseFlag);
 		}
 		
 		//Randomize length based on min and max
@@ -135,7 +135,7 @@ class randStringGen{
 		
 		
 		for(int i = 0; i<length;i++){
-			temp = rando.fastRandNum(0, 4); //For occuence rate of spaces, increase space rate by decreasing second number
+			temp = rando.fastRandNum(0, 4); //For occurence rate of spaces, increase space rate by decreasing second number
 			if(temp == 0 && spaceFlag){
 				oss << simpleSpace();
 				spaceFlag = false;
@@ -148,6 +148,10 @@ class randStringGen{
 		returnString = oss.str(); //Create string from stream
 		return returnString;
 	}
+	
+	/*string randSentence(int minLength, int maxLength){
+		
+	8/}
 };
 
 
