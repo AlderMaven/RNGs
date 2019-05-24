@@ -156,23 +156,23 @@ class randStringGen{
 		}
 		else{
 			RNG rando;
-			int length = rando.fastRandNum(minLength, maxLength);
+			int length = rando.fastRandNum(minLength, maxLength); //Determine length from parameters
 			int temp;
 			bool firstChar=true;
 			bool spaceFlag = false;
 			std::ostringstream oss;
 			string returnString;
-			for(int i = 0; i < length-1; i++){
-				temp = rando.fastRandNum(0,4);
-				if(i == length-2){
+			for(int i = 0; i < length; i++){
+				temp = rando.fastRandNum(0,4); //Adjust probability of spaces by adjusting max on this function
+				if(i == length-1){ //Prevent 2nd to last char of string from being a space
 					spaceFlag=false;
 				}
-				if(firstChar){
+				if(firstChar){ //Only generate 1st character as capital
 					oss<<generateUpperCase(1);
 					firstChar = false;
 					spaceFlag = true;
 				}
-				if(temp == 0 && spaceFlag){
+				if(temp == 0 && spaceFlag){ //prevent sequential spaces
 					oss << simpleSpace();
 					spaceFlag = false;
 				}
@@ -182,7 +182,7 @@ class randStringGen{
 				}
 				
 			}
-			oss << '.';
+			oss << '.'; //Place a period as last writable character
 			returnString = oss.str();
 			return returnString;
 		}
