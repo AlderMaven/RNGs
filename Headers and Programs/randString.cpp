@@ -150,7 +150,42 @@ class randStringGen{
 	}
 	
 	string randSentence(int minLength, int maxLength){
-		return NULL;
+		
+		if(minLength > maxLength || minLength < 2){
+			return NULL;
+		}
+		else{
+			RNG rando;
+			int length = rando.fastRandNum(minLength, maxLength);
+			int temp;
+			bool firstChar=true;
+			bool spaceFlag = false;
+			std::ostringstream oss;
+			string returnString;
+			for(int i = 0; i < length-1; i++){
+				temp = rando.fastRandNum(0,4);
+				if(i == length-2){
+					spaceFlag=false;
+				}
+				if(firstChar){
+					oss<<generateUpperCase(1);
+					firstChar = false;
+					spaceFlag = true;
+				}
+				if(temp == 0 && spaceFlag){
+					oss << simpleSpace();
+					spaceFlag = false;
+				}
+				else{
+					oss << generateLowerCase(1);
+					spaceFlag = true;
+				}
+				
+			}
+			oss << '.';
+			returnString = oss.str();
+			return returnString;
+		}
 	}
 };
 
@@ -160,7 +195,7 @@ int main(){ //Used for simple test cases
 	
 	randStringGen rando;
 	
-	string printingString = (rando.randSpacedString(50));
+	string printingString = (rando.randSentence(50,50));
 	cout << printingString << endl;
 	return 0;
 }
